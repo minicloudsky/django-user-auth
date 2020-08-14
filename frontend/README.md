@@ -1,6 +1,6 @@
 # frontend
 
-> django 用户身份认证系统前端
+> A Vue.js project
 
 ## Build Setup
 

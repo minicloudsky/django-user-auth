@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "django 用户身份认证系统前端",
+  "description": "A Vue.js project",
   "author": "minicloudsky <1397991131@qq.com>",
   "private": true,
   "scripts": {
@@ -14,9 +14,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "element-ui": "^2.13.2",
-    "https": "^1.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
