@@ -31,12 +31,22 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
+    open: false,
     overlay: {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js'),
+    // 新增开始
+    proxy: { // 注意是proxy，不能proxyTable
+      [process.env.VUE_APP_BASE_API]: { // 对应.env.development里的VUE_APP_BASE_API
+        target: 'http://127.0.0.1:8000', // 需要跨域的地址
+        changeOrigin: true,
+        pathRewrite: {
+          [process.env.VUE_APP_BASE_API]: 'http://127.0.0.1:8000'
+        }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

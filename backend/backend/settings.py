@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework.authtoken',
     'user',
     'log',
 ]
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,17 +80,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    "mysql": {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'huaweicloud.yawujia.cn',
+        'HOST': 'aliyun.yawujia.cn',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': 'root',
-        'NAME': 'lianjia',
+        'NAME': 'django_user_auth',
     },
 }
 
@@ -199,12 +202,12 @@ CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_METHODS = (
-    # 'DELETE',
+    'DELETE',
     'GET',
     'OPTIONS',
-    # 'PATCH',
+    'PATCH',
     'POST',
-    # 'PUT',
+    'PUT',
     'VIEW',
 )
 CORS_ALLOW_HEADERS = (
@@ -220,3 +223,8 @@ CORS_ALLOW_HEADERS = (
     'token',
     'x-requested-with'
 )
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}

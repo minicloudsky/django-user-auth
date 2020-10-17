@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 
 from user.models import User
 
@@ -54,7 +55,14 @@ class LoginView(APIView):
         if not user:
             return Response(status=status.HTTP_200_OK, data={"code": 200, "msg": '该用户未注册', 'data': {}})
         login(request, user)
-        return Response(status=status.HTTP_202_ACCEPTED, data={"code": 200, "msg": "登录成功", "data": {}})
+        token = Token.objects.get_or_create(user=request.user)
+        token = token[0].key if not token[1] else ''
+        user_info = {
+            'userid': request.user.id,
+            'username': request.user.username,
+            'token': token,
+        }
+        return Response(status=status.HTTP_202_ACCEPTED, data={"code": 200, "msg": "登录成功", "data": user_info})
 
 
 class AuthenticatePasswordView(APIView):
